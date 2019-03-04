@@ -1,0 +1,20 @@
+.container {
+  position: absolute;
+  min-width: 35.9rem;
+  z-index: 99;
+
+  display: block;
+  background: #fff;
+  text-align: left;
+  border-radius: 0 0 20px 20px;
+  border: 1px solid #DFE1E5;
+  cursor: default;
+
+  margin: -40px 8px 0;
+}
+
+.list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}

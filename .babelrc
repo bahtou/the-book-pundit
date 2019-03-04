@@ -1,0 +1,35 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "debug": false,
+        "targets": {
+          "browsers": [
+            "ie >= 11",
+            "firefox >= 45",
+            "chrome >= 50",
+            "edge >= 25",
+            "safari >= 10.10",
+            "ios >= 9",
+            "android >= 5.1"
+          ]
+        },
+        "loose": false,
+        "modules": false
+      }
+    ],
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-proposal-class-properties",
+    [
+      "@babel/plugin-proposal-pipeline-operator",
+      {
+        "proposal": "minimal"
+      }
+    ],
+    "react-hot-loader/babel"
+  ]
+}

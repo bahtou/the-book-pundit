@@ -1,0 +1,69 @@
+.container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: left;
+
+  background-color: #ffffff;
+  box-shadow: 0 1px 6px 0 rgba(33,33,36,0.28);
+  border-radius: 8px;
+
+  margin-bottom: 10px;
+  padding: 18px 6px;
+}
+
+.bookInfo {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: left;
+}
+
+.imgContainer {
+  background-color: green;
+}
+
+.metaContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  flex-basis: 217px;
+  justify-content: center;
+
+  padding-left: 12px;
+  background-color: #ffffff;
+}
+
+.bookTitle {
+  margin-top: 0;
+
+  font-family: Lato-Bold;
+  font-size: 1.5rem;
+  color: #000000;
+  letter-spacing: 0;
+  text-align: left;
+  line-height: 1.35rem;
+}
+
+.bookAuthor, .pubYear, .reviewsNum {
+  margin-bottom: 0.5rem;
+
+  font-family: Lato-Regular;
+  font-size: 1.3rem;
+  color: #555555;
+  letter-spacing: 0;
+  text-align: left;
+  line-height: 1.4rem;
+}
+
+.ratingInfo {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  .ratingScore {
+    font-size: 2.8rem;
+  }
+
+  .ratingStars {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+}

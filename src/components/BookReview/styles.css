@@ -1,0 +1,54 @@
+.divider {
+  margin: 1rem 0;
+}
+
+.container {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.firstRow {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.pundit {
+  font-family: Lato-Regular;
+  font-size: 15px;
+  color: #000000;
+  letter-spacing: 0;
+  text-align: left;
+  line-height: 34px;
+}
+
+.ratingStars {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.reviewTitle {
+  font-family: Lato-Bold;
+  font-size: 15px;
+  color: #000000;
+  letter-spacing: 0;
+  text-align: left;
+  line-height: 20.25px;
+}
+
+.pubDate {
+  font-family: Lato-Regular;
+  font-size: 13px;
+  color: #555555;
+  letter-spacing: 0;
+  text-align: left;
+}
+
+.reviewText {
+  font-family: Lato-Regular;
+  font-size: 15px;
+  color: #111111;
+  letter-spacing: 0;
+  text-align: left;
+  line-height: 20.25px;
+}
