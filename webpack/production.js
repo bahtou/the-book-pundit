@@ -33,7 +33,7 @@ module.exports = {
             loader: 'css-loader',
             options: {
               import: false,
-              url: true,
+              url: false,
               modules: true,
               localIdentName: '[folder]__[local]--[hash:base64:4]',
               sourceMap: true,
@@ -69,6 +69,8 @@ module.exports = {
 
   optimization: {
     concatenateModules: true,
+    namedModules: true,
+    namedChunks: true,
 
     minimizer: [
       // new UglifyWebpackPlugin({ sourceMap: true })
