@@ -20,7 +20,7 @@ module.exports = {
     ]
   },
 
-  recordsPath: path.resolve(__dirname, '..', '..', './records.json'),
+  recordsPath: path.resolve(__dirname, '..', './records.json'),
 
   module: {
     rules: [
@@ -119,7 +119,11 @@ module.exports = {
   },
 
   plugins: [
-    new CleanWebpackPlugin('build', {}),
+    new CleanWebpackPlugin('build', {
+      root: path.resolve(__dirname, '..'),
+      verbose:  true,
+      dry:      false
+    }),
 
     new webpack.DefinePlugin({
       'process.env': {

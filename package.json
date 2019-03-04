@@ -53,9 +53,9 @@
     "webpack-merge": "^4.2.1"
   },
   "scripts": {
-    "build": "npm run clean && webpack --config ./webpack/index.js --env production && http-server -p 8000 ./build",
-    "build:dev": "npm run clean && webpack --config webpack.config.js --env development",
-    "clean": "rimraf recordsPath.json build/",
+    "build": "npm run clean && webpack --config ./webpack/index.js --env production",
+    "build:dev": "npm run clean && webpack --config ./webpack/index.js --env development",
+    "clean": "rimraf recordsPath.json ./build",
     "update": "rm -rf node_modules/ package-lock.json && npm install",
     "dev": "webpack-dev-server --config ./webpack/index.js --env development"
   }
