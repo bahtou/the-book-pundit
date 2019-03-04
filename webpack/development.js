@@ -141,7 +141,7 @@ module.exports = {
     // see webpack.EnvironmentPlugin(["NODE_ENV"])
     new webpack.DefinePlugin({
       'process.env': {
-        HOLA: JSON.stringify('hola desde el base-config'),
+        TBP_API: JSON.stringify('http://localhost:3000'),
         NODE_ENV: JSON.stringify('development'),
         SCHEME: JSON.stringify('http'),
         HOST: JSON.stringify(host),

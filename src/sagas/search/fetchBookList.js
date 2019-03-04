@@ -7,14 +7,18 @@ import {
 
 
 function searchTermRequest(searchTerm) {
-  return fetch(`http://localhost:3000/search?q=${searchTerm}`, {
-    method: 'GET',
-    mode: 'cors',
-    cache: 'no-cache'
-  })
-    .then(res => {
-      return res.json();
-    });
+  return new Promise((resolve, reject) => {
+    fetch(`${process.env.TBP_API}/search?q=${searchTerm}`, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache'
+    })
+      .then(res => {
+        resolve(res.json());
+      })
+      .catch(err => reject(err));
+  });
+
 }
 
 function* fetchBookList() {

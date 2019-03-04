@@ -7,14 +7,17 @@ import {
 
 
 function bookReviewsRequest(bookId) {
-  return fetch(`http://localhost:3000/reviews/${bookId}`, {
-    method: 'GET',
-    mode: 'cors',
-    cache: 'no-cache'
-  })
-    .then(res => {
-      return res.json();
-    });
+  return new Promise((resolve, reject) => {
+    fetch(`${process.env.TBP_API}/reviews/${bookId}`, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache'
+    })
+      .then(res => {
+        resolve(res.json());
+      })
+      .catch(err => reject(err));
+  });
 }
 
 function* fetchBookReviews() {
