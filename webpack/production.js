@@ -127,7 +127,7 @@ module.exports = {
 
     new webpack.DefinePlugin({
       'process.env': {
-        TBP_API: JSON.stringify('http://api.thebookpundit.app'),
+        TBP_API: JSON.stringify('http://api.thebookpundit.app:3000'),
         NODE_ENV: JSON.stringify('production'),
         SCHEME: JSON.stringify('http'),
         HOST: JSON.stringify(host),
