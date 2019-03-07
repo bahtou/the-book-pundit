@@ -8,13 +8,13 @@ import {
   bookTitle, bookAuthor, ratingScore, bookInfo, reviewsNum, pubYear, ratingInfo, ratingStars
 } from './styles.css';
 import StarIcons from 'Elements/Icons/Star';
-import BookReviews from 'Components/BookReviews';
+const BookReviews = React.lazy(() => import('Components/BookReviews'));
 
 
-const BookCard = ({ book, fetchBookReviewsRequested, reviews={} }) => {
+const BookCard = ({ book, fetchBookReviewsRequested, reviews:{ reviewResults={} }}) => {
   const [visibility, setVisibility] = useState(false);
   const { book_id, author, imageURL, publicationYear, rating, numOfReviews, title } = book;
-  let bookReviews = reviews[book_id] || [];
+  let bookReviews = reviewResults[book_id] || [];
 
   const handleOnClick = () => {
     setVisibility(!visibility);

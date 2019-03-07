@@ -22,8 +22,8 @@ const baseConfig = {
   output: {
     path: outputPath,
     publicPath: './',
-    filename: '[name].[hash:4].js',
-    chunkFilename: '[name].[chunkhash:4].js',
+    filename: 'file.[name].[hash:4].js',
+    chunkFilename: 'chunk.[name].[chunkhash:4].js',
     globalObject: 'this'
   },
 

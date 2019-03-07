@@ -1,39 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-
-import { fetchBookListRequested } from 'Sagas/search';
+import React, { useState, useContext } from 'react';
 
 import {
   container, searchBar, barContainer, searchButton,
   searchInput, theXBox, theXButton, theX
 } from './styles.css';
+import { AppContext } from 'Contexts';
 import SearchIcon from 'Elements/Icons/Search';
 
-const queryRegex = /\?q=(?<searchQuery>\w+)/;
 
 function SearchBar({
-  searchTerm, setSearchTerm,
-  hasSearchHistory, setHasSearchHistory, setOpenPanel,
-  searchHistory, setSearchHistory,
-  searchEl, styles:{ styBar, styBtn },
-  fetchBookListRequested}) {
+  searchTerm, isPanelOpen, hasSearchHistory, searchHistory,
+  inputEl, dispatch, styles:{ styBar, styBtn }
+}) {
   const [ btnDisplay, setBtnDisplay ] = useState({});
-
-  useEffect(() => {
-    let querySearch;
-    let urlSearchTerm;
-    const query = window.location.search;
-
-    if (query) {
-      querySearch = queryRegex.exec(query);
-      urlSearchTerm = querySearch.groups.searchQuery;
-      setSearchTerm(urlSearchTerm);
-      setBtnDisplay({ 'display': 'flex' });
-    }
-  }, []);
+  const { fetchBookList } = useContext(AppContext);
 
   function handleOnChange(e) {
-    console.log('onchange happened');
     const value = e.target.value;
 
     if (value !== '') {
@@ -42,62 +24,75 @@ function SearchBar({
 
     if (value === '' && hasSearchHistory) {
       setBtnDisplay({});
-      setOpenPanel(true);
+      dispatch({ type: 'setIsPanelOpen', data: true });
     }
 
-    setSearchTerm(e.target.value);
+    dispatch({ type: 'setSearchTerm', data: e.target.value });
   }
 
   function handleOnClick(e) {
     e.preventDefault();
 
     if (!searchTerm) return;
-    fetchBookListRequested(searchTerm);
 
-    if (searchHistory.length === 5) {
-      searchHistory.pop();
-    }
-
-    setHasSearchHistory(true);
-    setOpenPanel(false);
-    setSearchHistory([ searchTerm, ...searchHistory ]);
-
-    window.history.pushState('page2', 'Search', `/search?q=${searchTerm}`);
+    _fetchBookList(searchTerm);
   }
 
   function handleOnFocus(e) {
     const searchTerm = e.target.value;
 
     if (hasSearchHistory && searchTerm === '') {
-      console.log('focused and history');
-      setOpenPanel(true);
+      dispatch({ type: 'setIsPanelOpen', data: true });
+      return;
     }
+
+    setBtnDisplay({ 'display': 'flex' });
   }
 
   function removeSearchTerm() {
-    setSearchTerm('');
+    dispatch({ type: 'setSearchTerm', data: '' });
+    inputEl.current.focus();
     setBtnDisplay({});
-    searchEl.current.focus();
 
     if (hasSearchHistory) {
-      setOpenPanel(true);
+      dispatch({ type: 'setIsPanelOpen', data: true });
     }
   }
 
   function handleOnKeyPress(e) {
-    if (e.key === 'Enter' && searchEl.current.value !== '') {
-      console.log('fetch search');
-    }
+    const searchTerm = inputEl.current.value;
+
+    if (e.key !== 'Enter' || !searchTerm) return;
+
+    _fetchBookList(searchTerm);
   }
 
-  console.log('bar rendered', searchHistory);
+  function _fetchBookList(searchTerm) {
+    fetchBookList(searchTerm);
+
+    if (searchHistory.length === 5) {
+      searchHistory.pop();
+    }
+
+    if (isPanelOpen) {
+      dispatch({ type: 'setIsPanelOpen', data: false });
+    }
+
+    if (!hasSearchHistory) {
+      dispatch({ type: 'setHasSearchHistory', data: true });
+    }
+
+    if (!searchHistory.includes(searchTerm)) {
+      dispatch({ type: 'setSearchHistory', data: [ searchTerm, ...searchHistory ]});
+    }
+  }
 
   return (
     <div className={ container } style={ styBar }>
       <div className={ barContainer }>
         <div className={ searchBar }>
           <input className={ searchInput } type="search" name="q" value={ searchTerm }
-            ref={ searchEl }
+            ref={ inputEl }
             maxLength="2048"
             autoComplete="off"
             autoCorrect="off"
@@ -123,4 +118,4 @@ function SearchBar({
 }
 
 
-export default connect(null, { fetchBookListRequested })(SearchBar);
+export default SearchBar;

@@ -8,7 +8,6 @@
     "@babel/polyfill": "^7.2.5",
     "@hot-loader/react-dom": "^16.8.1",
     "react": "^16.8.1",
-    "react-hooks-accordion": "^1.0.1",
     "react-hot-loader": "^4.6.5",
     "react-redux": "^6.0.1",
     "redux-saga": "^1.0.2"
@@ -54,7 +53,7 @@
   },
   "scripts": {
     "build": "npm install && npm run clean && webpack --config ./webpack/index.js --env production",
-    "build:dev": "npm run clean && webpack --config ./webpack/index.js --env development",
+    "build:dev": "npm run clean && webpack --config ./webpack/index.js --env production && python -m SimpleHTTPServer 8000 ./build",
     "clean": "rimraf recordsPath.json ./build",
     "update": "rm -rf node_modules/ package-lock.json && npm install",
     "dev": "webpack-dev-server --config ./webpack/index.js --env development"

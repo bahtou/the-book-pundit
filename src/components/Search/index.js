@@ -1,67 +1,65 @@
-import React, { useState, useCallback, useEffect, useReducer, useRef } from 'react';
+import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 
 import SearchBar from './SearchBar';
 import SearchPanel from './SearchPanel';
 
 
+const initialState = {
+  searchTerm: '',
+  searchHistory: [],
+  hasSearchHistory: false,
+  isPanelOpen: false
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'setSearchTerm':
+      return { ...state, searchTerm: action.data };
+    case 'setSearchHistory':
+      return { ...state, searchHistory: action.data };
+    case 'setHasSearchHistory':
+      return { ...state, hasSearchHistory: action.data };
+    case 'setIsPanelOpen':
+      return { ...state, isPanelOpen: action.data };
+    default:
+      return state;
+  }
+}
+
 function Search() {
-  const [ searchTerm, setSearchTerm ] = useState('');
-  const [ hasSearchHistory, setHasSearchHistory ] = useState(false);
-  const [ openPanel, setOpenPanel ] = useState(false);
-  const [ searchHistory, setSearchHistory ] = useState([]);
-  const searchEl = useRef(null);
-  let styles = {};
+  const [ state, dispatch ] = useReducer(reducer, initialState);
+  const { searchTerm, searchHistory, hasSearchHistory, isPanelOpen } = state;
+  const [ styles, setStyles ] = useState({});
+  const inputEl = useRef(null);
 
-  const updateSearchHistory = useCallback(
-    searchTerm => {
-      let newSearchHistory = searchHistory;
-
-      if (searchTerm) {
-        newSearchHistory = searchHistory.filter(el => el !== searchTerm);
-        if (newSearchHistory.length === 0) {
-          styles = {};
-          setHasSearchHistory(false);
+  useEffect(() => {
+    if (hasSearchHistory && isPanelOpen) {
+      setStyles({
+        styBar: {
+          borderBottom: 'none',
+          borderBottomLeftRadius: 0,
+          borderBottomRightRadius: 0
+        },
+        styBtn: {
+          borderBottomRightRadius: 0
         }
-      }
+      });
+    } else {
+      setStyles({});
+    }
+  }, [hasSearchHistory, isPanelOpen]);
 
-      setSearchHistory(newSearchHistory);
-    },
-    [ searchHistory ]
-  );
-
-  function replaceCurrentSearch(searchTerm) {
-    setSearchTerm(searchTerm);
-    setOpenPanel(false);
-  }
-
-  if (hasSearchHistory && openPanel) {
-    styles = {
-      styBar: {
-        borderBottom: 'none',
-        borderBottomLeftRadius: 0,
-        borderBottomRightRadius: 0
-      },
-      styBtn: {
-        borderBottomRightRadius: 0
-      }
-    };
-  }
-
-  console.log('rendered', searchHistory);
   return (
     <>
-      <SearchBar searchTerm={ searchTerm } setSearchTerm={ setSearchTerm }
-        hasSearchHistory={ hasSearchHistory } setHasSearchHistory={ setHasSearchHistory } setOpenPanel={ setOpenPanel }
-        searchHistory={ searchHistory }
-        setSearchHistory={ setSearchHistory }
-        searchEl={ searchEl } styles={ styles } />
+      <SearchBar searchTerm={ searchTerm } searchHistory={ searchHistory } isPanelOpen={ isPanelOpen }
+        dispatch={ dispatch } hasSearchHistory={ hasSearchHistory }
+        inputEl={ inputEl } styles={ styles } />
       {
-        hasSearchHistory && openPanel
+        isPanelOpen && hasSearchHistory
           ? <SearchPanel
-            searchEl={ searchEl }
-            searchHistory={ searchHistory }
-            updateSearchHistory={ updateSearchHistory }
-            replaceCurrentSearch={ replaceCurrentSearch } />
+            inputEl={ inputEl }
+            dispatch={ dispatch }
+            searchHistory={ searchHistory } />
           : null
       }
     </>

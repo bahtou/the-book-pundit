@@ -10,7 +10,7 @@ export const FETCH_BOOKLIST_REQUESTED = 'FETCH_BOOKLIST_REQUESTED';
 export const PROCESS_SEARCH_RESULTS = 'PROCESS_SEARCH_RESULTS';
 export const STORE_SEARCH_RESULTS = 'STORE_SEARCH_RESULTS';
 /**
- * EVENTS
+ * EVENTS / ACTION CREATORS
  */
 const fetchBookListRequested = searchTerm => {
   return {
@@ -65,6 +65,7 @@ function* pipeline() {
 export default function* search() {
   yield all([
     pipeline(),
+    // checkCache(),
     fetchBookList(),
     processResults(),
     storeResults()

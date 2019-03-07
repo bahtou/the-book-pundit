@@ -15,8 +15,12 @@ const { cssPaths, host, port, postcssPaths } = require('./base-params');
 
 module.exports = {
   entry: {
+    main: path.resolve(__dirname, '..', 'src/index.js'),
+    BookReviews: path.resolve(__dirname, '..', 'src/components/BookReviews'),
+    BookList: path.resolve(__dirname, '..', 'src/components/BookList'),
     vendor: [
-      'react-hot-loader', 'react', '@hot-loader/react-dom', '@babel/polyfill'
+      '@babel/polyfill', '@hot-loader/react-dom', 'react-hot-loader',
+      'react', 'react-redux', 'redux-saga'
     ]
   },
 
@@ -97,16 +101,36 @@ module.exports = {
     ],
 
     runtimeChunk: {
-      name: 'manifest'
+      name: 'runtimeChunk'
     },
-
+    // runtimeChunk: 'single',
     splitChunks: {
-      // chunks: "initial",
+      chunks: 'all',
+      maxInitialRequests: Infinity,
+      minSize: 0,
       cacheGroups: {
-        commons: {
+        default: false,
+        vendors: false,
+        vendor: {
+          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+          name: 'reacts',
+          chunks: 'all'
+        },
+        vendor: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-          chunks: 'initial'
+          name(module) {
+            // get the name. E.g. node_modules/packageName/not/this/part.js
+            // or node_modules/packageName
+            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+
+            // npm package names are URL-safe, but some servers don't like @ symbols
+            return `npm.${packageName.replace('@', '')}`;
+          }
+        },
+        commons: {
+          name: 'commons',
+          chunks: 'initial',
+          minChunks: 2
         }
       }
     }

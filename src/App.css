@@ -1,4 +1,39 @@
 .container {
   position: relative;
-  padding-top: 64px;
+}
+
+.logoContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.welcomeContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  p {
+    margin-top: 1rem;
+    font-size: 2.6rem;
+  }
+}
+
+.welList {
+  margin: 2rem 5rem;
+
+  li {
+    list-style: disc;
+    border: none !important;
+  }
+}
+
+.welItem {
+  font-size: 1.8rem;
+}
+
+.DRM {
+  margin-top: 3rem;
+  font-size: 1.8rem;
 }
