@@ -15,21 +15,25 @@ function StarIcon({ rating=0, size }) {
 
   let i=0;
   for (;i<first; i++) {
-    stars.push(FullStarIcon);
+    stars.push([FullStarIcon, size]);
   }
 
   if (second >= 5) {
-    stars.push(HalfStarIcon);
+    stars.push([HalfStarIcon, size]);
   }
 
   while (stars.length < 5) {
-    stars.push(EmptyStarIcon);
+    stars.push([EmptyStarIcon, size]);
   }
 
   return (
     <>
       {
-        stars.map((Star, idx) => <Star key={ idx } size={ size } />)
+        stars.map((Arr, idx) => {
+          const Star = Arr[0];
+          const size = Arr[1];
+          return <Star key={ idx } size={ size } />;
+        })
       }
     </>
   );

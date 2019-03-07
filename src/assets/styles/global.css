@@ -53,9 +53,3 @@ p {
   font-size:1.6rem;
   margin-bottom: 2rem;
 }
-
-svg {
-  display: block;
-  height: 100%;
-  width: 100%;
-}

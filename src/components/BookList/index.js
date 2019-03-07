@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useReducer, useRef } from 'react';
+import React from 'react';
 import BookCard from 'Components/BookCard';
 
 
 import { container, listContainer } from './styles.css';
 
 
-function BookList({ bookList=[] }) {
+function BookList({ bookList }) {
   return (
     <div className={ container }>
       <ul className={ listContainer }>

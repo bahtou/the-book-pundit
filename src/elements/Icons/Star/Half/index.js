@@ -2,17 +2,19 @@ import React from 'react';
 import { container, box } from '../styles.css';
 
 
-const HalfStarIcon = ({ size='reg' }) => {
-  let width = '20px';
+const HalfStarIcon = ({ size }) => {
+  let width = '40';
+  let height = '40';
 
   if (size === 'small') {
-    width = '10px';
+    width = '20';
+    height = '20';
   }
 
   return (
     <div className={ container }>
       <span className={ box }>
-        <svg width={ width } height="19px" viewBox="0 0 20 19" version="1.1">
+        <svg width={ width } height={ height } viewBox="0 0 20 19" version="1.1">
           <defs>
             <rect id="path-1" x="0" y="0" width="10" height="18" />
           </defs>
