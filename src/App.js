@@ -5,9 +5,10 @@ import Spinner from 'react-loader-spinner';
 
 import {
   container, logoContainer, appTitle,
-  welcomeContainer, welList, welItem, DRM
+  welcomeContainer, welList, welItem, DRM, berlinImg
 } from './App.css';
 import logo from 'Images/logo.jpg';
+import BerlinSaloon from 'Images/BerlinSaloon.jpg';
 
 import Search from 'Components/Search';
 const BookList = React.lazy(() => import('Components/BookList'));
@@ -83,15 +84,22 @@ function Welcome() {
   return (
     <div className={ welcomeContainer }>
       <h2>Hola Amigos!</h2>
-      <p>Welcome to SXSW</p>
+
       <ul className={ welList }>
         <li><span className={ welItem }>Type in a title of a book to get started</span></li>
         <li><span className={ welItem }>From the book list select one to see what's all the chatter</span></li>
       </ul>
 
+      <div className={ berlinImg }>
+        <a href="https://www.eventbrite.com/o/berlinsaloon-sxsw-2019-18555941671">
+          <img src={ BerlinSaloon } alt="berlin-saloon-logo" />
+        </a>
+      </div>
+
       <span className={ DRM }>
         <a href="https://www.internationalwomensday.com/">#BalanceforBetter</a>
       </span>
+
 
       <span className={ DRM }>Downtown ReactJS Meetup</span>
     </div>
