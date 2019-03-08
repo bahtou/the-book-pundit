@@ -26,7 +26,6 @@ function SearchPanel({ inputEl, dispatch, searchHistory }) {
     inputEl.current.focus();
   }
 
-  console.log('SearchPanel rendered');
   return (
     <div className={ container }>
       <ul className={ list } role="listbox">

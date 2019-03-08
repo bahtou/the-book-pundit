@@ -42,8 +42,6 @@ const BookCard = ({ book, fetchBookReviewsRequested, reviews:{ currentReviews, r
     fetchBookReviewsRequested(book_id);
   };
 
-  console.log('bookcard render');
-
   return (
     <section id={ book_id } className={ container }
       onClick={ handleOnClick }>

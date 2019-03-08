@@ -48,8 +48,6 @@ function App({ currentSearchTerm, searchResults, fetchBookListRequested }) {
     }
   }
 
-  console.log(isLoading, bookList);
-
   return (
     <AppContext.Provider value={{ fetchBookList }}>
       <div className={ container }>

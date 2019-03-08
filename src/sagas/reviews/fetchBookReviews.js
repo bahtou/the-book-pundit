@@ -29,7 +29,6 @@ function* fetchBookReviews() {
     const { reviewResults } = yield select(state => state.reviews);
 
     if (reviewResults && reviewResults[bookId]) {
-      console.log('--cached');
       yield put({ type: STORE_REVIEWS_RESULTS, data: { bookId, bookReviews: reviewResults[bookId] }});
     } else {
       try {
