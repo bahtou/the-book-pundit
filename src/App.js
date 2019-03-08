@@ -88,6 +88,11 @@ function Welcome() {
         <li><span className={ welItem }>Type in a title of a book to get started</span></li>
         <li><span className={ welItem }>From the book list select one to see what's all the chatter</span></li>
       </ul>
+
+      <span className={ DRM }>
+        <a href="https://www.internationalwomensday.com/">#BalanceforBetter</a>
+      </span>
+
       <span className={ DRM }>Downtown ReactJS Meetup</span>
     </div>
   );
