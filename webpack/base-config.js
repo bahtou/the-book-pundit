@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 
 const {
   appEntry, contextPath, fontPathEntry,
@@ -98,16 +98,12 @@ const baseConfig = {
       debug: false
     }),
 
-    // new CopyWebpackPlugin([
-    //   { from: 'assets' }
-    // ]),
-
     new HtmlWebpackPlugin({
-      title: 'react ❤ webpack',
       template: 'index.html',
-      // favicon: '',
-      // meta: { viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no' },
-      // minify: {Boolean|Object}
+      meta: {
+        charset: 'utf-8',
+        viewport: 'width=device-width, initial-scale=1'
+      },
       inject: true,
       hash: true,
       cache: true,

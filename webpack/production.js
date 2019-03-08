@@ -2,10 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
-// const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
-const UglifyWebpackPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const cssImport = require('postcss-import');
 const postcssPresetEnv = require('postcss-preset-env');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -44,7 +43,8 @@ module.exports = {
               import: false,
               url: false,
               modules: true,
-              localIdentName: '[folder]__[local]--[hash:base64:4]',
+              // localIdentName: '[folder]__[local]--[hash:base64:4]',
+              localIdentName: '[hash:base64:4]',
               sourceMap: true,
               camelCase: false,
               importLoaders: 1
@@ -82,56 +82,29 @@ module.exports = {
     namedChunks: true,
 
     minimizer: [
-      // new UglifyWebpackPlugin({ sourceMap: true })
-      // new UglifyWebpackPlugin({
-      //   parallel: true,
-      //   sourceMap: true,
-      //   extractComments: false,
-      //   uglifyOptions: {
-      //     ecma: 8,
-      //     mangle: false,
-      //     output: {
-      //       comments: false,
-      //       beautify: true
-      //     },
-      //     compress: {
-      //       warnings: false,
-      //       drop_console: false,
-      //       drop_debugger: true,
-      //       dead_code: true
-      //     },
-      //     warnings: true
-      //   }
-      // })
+      new TerserPlugin({
+        test: /\.js(\?.*)?$/i,
+        cache: true,
+        parallel: true,
+        sourceMap: true,
+        terserOptions: {
+          ie8: false,
+          keep_classnames: false,
+          keep_fnames: false,
+          safari10: false,
+        },
+        extractComments: true
+      })
     ],
 
-    runtimeChunk: {
-      name: 'runtimeChunk'
-    },
-    // runtimeChunk: 'single',
+    runtimeChunk: 'single',
     splitChunks: {
       chunks: 'all',
       maxInitialRequests: Infinity,
-      minSize: 0,
+      minChunks: 1,
+      maxSize: 0,
+      name: true,
       cacheGroups: {
-        default: false,
-        vendors: false,
-        // vendor: {
-        //   test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-        //   name: 'reacts',
-        //   chunks: 'all'
-        // },
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name(module) {
-            // get the name. E.g. node_modules/packageName/not/this/part.js
-            // or node_modules/packageName
-            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-
-            // npm package names are URL-safe, but some servers don't like @ symbols
-            return `npm.${packageName.replace('@', '')}`;
-          }
-        },
         commons: {
           name: 'commons',
           chunks: 'initial',
@@ -173,15 +146,11 @@ module.exports = {
       cssModules: true // if you use cssModules, this can help.
     }),
 
-    // new webpack.BannerPlugin({
-      // banner: new GitRevisionPlugin().version()
-    // }),
-
     new OptimizeCSSAssetsPlugin({
       cssProcessor: cssnano,
       cssProcessorOptions: {
         discardComments: {
-          removeAll: false
+          removeAll: true
         },
         // Run cssnano in safe mode to avoid
         // potentially unsafe transformations.
@@ -193,10 +162,5 @@ module.exports = {
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1
     })
-
-    // new webpack.optimize.AggressiveSplittingPlugin({
-    //   minSize: 10000,
-    //   maxSize: 30000,
-    // }),
   ]
 };
