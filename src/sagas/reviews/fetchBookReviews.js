@@ -1,8 +1,9 @@
-import { call, put, take } from 'redux-saga/effects';
+import { call, put, select, take } from 'redux-saga/effects';
 
 import {
   FETCH_BOOKREVIEWS_REQUESTED,
-  PROCESS_REVIEWS_RESULTS
+  PROCESS_REVIEWS_RESULTS,
+  STORE_REVIEWS_RESULTS
 } from './index';
 
 
@@ -25,14 +26,21 @@ function* fetchBookReviews() {
     const { data:bookId } = yield take(FETCH_BOOKREVIEWS_REQUESTED);
     let response = {};
 
-    try {
-      response = yield call(bookReviewsRequest, bookId);
-    } catch (err) {
-      console.log(err);
-      debugger;
-    }
+    const { reviewResults } = yield select(state => state.reviews);
 
-    yield put({ type: PROCESS_REVIEWS_RESULTS, data: { bookId, bookReviews: response }});
+    if (reviewResults && reviewResults[bookId]) {
+      console.log('--cached');
+      yield put({ type: STORE_REVIEWS_RESULTS, data: { bookId, bookReviews: reviewResults[bookId] }});
+    } else {
+      try {
+        response = yield call(bookReviewsRequest, bookId);
+      } catch (err) {
+        console.log(err);
+        debugger;
+      }
+
+      yield put({ type: PROCESS_REVIEWS_RESULTS, data: { bookId, bookReviews: response }});
+    }
   }
 }
 

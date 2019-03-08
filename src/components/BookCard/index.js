@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { connect } from 'react-redux';
+import Spinner from 'react-loader-spinner';
 
 import { fetchBookReviewsRequested } from 'Sagas/reviews';
 
@@ -11,17 +12,34 @@ import StarIcons from 'Elements/Icons/Star';
 const BookReviews = React.lazy(() => import('Components/BookReviews'));
 
 
-const BookCard = ({ book, fetchBookReviewsRequested, reviews:{ reviewResults={} }}) => {
-  const [visibility, setVisibility] = useState(false);
-  const { book_id, author, imageURL, publicationYear, rating, numOfReviews, title } = book;
-  let bookReviews = reviewResults[book_id] || [];
+const BookCard = ({ book, fetchBookReviewsRequested, reviews:{ currentReviews, reviewResults }}) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [bookReviews, setBookReviews] = useState([]);
+  const {
+    book_id, author, imageURL,
+    publicationYear, rating, numOfReviews, title
+  } = book;
+
+  useEffect(() => {
+    const { reviews } = currentReviews;
+
+    if (isLoading) {
+      setBookReviews(reviews);
+      setIsLoading(false);
+      setIsVisible(true);
+    }
+
+  }, [currentReviews]);
 
   const handleOnClick = () => {
-    setVisibility(!visibility);
-
-    if (bookReviews.length === 0) {
-      fetchBookReviewsRequested(book_id);
+    if (isVisible) {
+      setIsVisible(false);
+      return;
     }
+
+    setIsLoading(true);
+    fetchBookReviewsRequested(book_id);
   };
 
   console.log('bookcard render');
@@ -31,7 +49,7 @@ const BookCard = ({ book, fetchBookReviewsRequested, reviews:{ reviewResults={} 
       onClick={ handleOnClick }>
       <div className={ bookInfo }>
         <div className={ imgContainer }>
-          <img width="118px" src={ imageURL } alt="book cover image" />
+          <img width="118px" src={ imageURL } />
         </div>
         <div className={ metaContainer }>
           <h5 className={ bookTitle }>{ title }</h5>
@@ -48,8 +66,17 @@ const BookCard = ({ book, fetchBookReviewsRequested, reviews:{ reviewResults={} 
         </div>
       </div>
       {
-        visibility && bookReviews.length > 0
-          ? <BookReviews bookReviews={ bookReviews } />
+        isLoading
+          ? <div style={{ display: 'flex', 'justifyContent': 'center', 'marginTop': '20px' }}>
+              <Spinner type="Puff" color="#000000" height={ 80 } width={ 80 } />
+            </div>
+          : null
+      }
+      {
+        isVisible
+          ? <Suspense fallback={ <Spinner type="Puff" color="#000000" height={ 80 } width={ 80 } /> }>
+              <BookReviews bookReviews={ bookReviews } />
+            </Suspense>
           : null
       }
     </section>

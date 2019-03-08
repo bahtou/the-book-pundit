@@ -1,9 +1,11 @@
-.container {
-  /* background-color: red; */
-}
-
 .listContainer {
   padding: 10px 8px;
   background-color: #ffffff;
 }
 
+.noBookForYou {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  font-size: 3rem;
+}

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 
 import SearchBar from './SearchBar';
 import SearchPanel from './SearchPanel';

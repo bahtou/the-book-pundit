@@ -1,6 +1,7 @@
 import { hot } from 'react-hot-loader/root';
 import React, { useEffect, useState, Suspense } from 'react';
 import { connect } from 'react-redux';
+import Spinner from 'react-loader-spinner';
 
 import {
   container, logoContainer, appTitle,
@@ -16,24 +17,38 @@ import { fetchBookListRequested } from 'Sagas/search';
 
 
 function App({ currentSearchTerm, searchResults, fetchBookListRequested }) {
-  const [ bookList, setBookList ] = useState([]);
   const [ isFirstLoad, setIsFirstLoad ] = useState(true);
+  const [ isLoading, setIsLoading ] = useState(false);
+  const [ bookList, setBookList ] = useState(null);
 
   useEffect(() => {
-    if (searchResults[currentSearchTerm]) {
-      setBookList(searchResults[currentSearchTerm]);
-    }
+    if (!currentSearchTerm) return;
+
+    const bookListResult = searchResults[currentSearchTerm];
+    bookListResult
+      ? setBookList(bookListResult)
+      : setBookList([]);
+
+    setIsLoading(false);
   }, [searchResults, currentSearchTerm]);
 
   function fetchBookList(searchTerm) {
+    const bookListResults = searchResults[searchTerm];
+
+    setBookList(null);
+    setIsLoading(true);
+
     if (isFirstLoad) setIsFirstLoad(false);
 
-    if (searchResults[searchTerm]) {
-      setBookList(searchResults[searchTerm]);
+    if (bookListResults) {
+      setIsLoading(false);
+      setBookList(bookListResults);
     } else {
       fetchBookListRequested(searchTerm);
     }
   }
+
+  console.log(isLoading, bookList);
 
   return (
     <AppContext.Provider value={{ fetchBookList }}>
@@ -45,11 +60,15 @@ function App({ currentSearchTerm, searchResults, fetchBookListRequested }) {
 
         <Search />
 
-        { bookList.length !== 0
-          ? <Suspense fallback={ <div>Loading...</div> }>
-              <BookList bookList={ bookList } />
-            </Suspense>
-          : null
+        { isLoading
+          ? <div style={{ display: 'flex', 'justifyContent': 'center' }}>
+              <Spinner type="Puff" color="#000000" height={ 80 } width={ 80 } />
+            </div>
+          : !bookList
+            ? null
+            : <Suspense fallback={ <Spinner type="Puff" color="#000000" height={ 80 } width={ 80 } /> }>
+                <BookList bookList={ bookList } />
+              </Suspense>
         }
 
         { isFirstLoad

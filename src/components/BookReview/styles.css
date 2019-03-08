@@ -35,20 +35,3 @@
   text-align: left;
   line-height: 20.25px;
 }
-
-.pubDate {
-  font-family: Lato-Regular;
-  font-size: 13px;
-  color: #555555;
-  letter-spacing: 0;
-  text-align: left;
-}
-
-.reviewText {
-  font-family: Lato-Regular;
-  font-size: 15px;
-  color: #111111;
-  letter-spacing: 0;
-  text-align: left;
-  line-height: 20.25px;
-}

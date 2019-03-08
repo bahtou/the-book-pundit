@@ -8,13 +8,14 @@ module.exports = {
   contextPath: path.resolve(__dirname, '..', appRoot),
 
   cssPaths: [
-    path.resolve(__dirname, '..', `${appRoot}/assets/styles`),
     path.resolve(__dirname, '..', `${appRoot}/assets/fonts`),
+    path.resolve(__dirname, '..', `${appRoot}/assets/images`),
+    path.resolve(__dirname, '..', `${appRoot}/assets/styles`),
     path.resolve(__dirname, '..', `${appRoot}/components`),
     path.resolve(__dirname, '..', `${appRoot}/elements`),
     path.resolve(__dirname, '..', `${appRoot}/pages`),
     path.resolve(__dirname, '..', `${appRoot}/shared`),
-    path.resolve(__dirname, '..', `${appRoot}/App.css`)
+    path.resolve(__dirname, '..', `${appRoot}`)
   ],
 
   fontPathEntry: [path.resolve(__dirname, '..', `${appRoot}/assets/fonts`)],

@@ -16,7 +16,7 @@ const initialState = {
 const actionHandlers = {
   [SET_CURRENT_REVIEWS]: (state, action) => {
     const { bookId, bookReviews } = action.data;
-    return { ...state, currentReviews: { bookId, bookReviews }};
+    return { ...state, currentReviews: { bookId, reviews: bookReviews }};
   },
 
   [SET_BOOK_REVIEWS]: (state, action) => {

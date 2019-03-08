@@ -20,7 +20,7 @@ module.exports = {
     BookList: path.resolve(__dirname, '..', 'src/components/BookList'),
     vendor: [
       '@babel/polyfill', '@hot-loader/react-dom', 'react-hot-loader',
-      'react', 'react-redux', 'redux-saga'
+      'react', 'react-redux', 'redux-saga', 'react-loader-spinner'
     ]
   },
 
@@ -28,6 +28,11 @@ module.exports = {
 
   module: {
     rules: [
+      {
+        test: /\.css$/,
+        include: /node_modules/,
+        loaders: ['style-loader', 'css-loader']
+      },
       {
         test: /\.css$/,
         include: cssPaths,
@@ -111,11 +116,11 @@ module.exports = {
       cacheGroups: {
         default: false,
         vendors: false,
-        vendor: {
-          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-          name: 'reacts',
-          chunks: 'all'
-        },
+        // vendor: {
+        //   test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+        //   name: 'reacts',
+        //   chunks: 'all'
+        // },
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           name(module) {

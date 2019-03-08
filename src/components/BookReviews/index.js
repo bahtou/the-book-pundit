@@ -1,13 +1,17 @@
-import React, { useState, useEffect, useReducer, useRef } from 'react';
+import React from 'react';
 
-import { container, listContainer } from './styles.css';
+import { noBookReviewsForYou } from './styles.css';
 import BookReview from 'Components/BookReview';
 
 
 function BookReviews({ bookReviews }) {
+  if (bookReviews.length === 0) {
+    return <div className={ noBookReviewsForYou }>No Book Reviews for you!</div>;
+  }
+
   return (
-    <div className={ container }>
-      <ul className={ listContainer }>
+    <div>
+      <ul>
         {
           bookReviews.map((bookReview, idx) => <BookReview key={ idx } bookReview={ bookReview } />)
         }

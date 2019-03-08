@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useReducer, useRef } from 'react';
+import React from 'react';
 
 import {
   container, pundit, ratingStars, firstRow,
-  reviewTitle, pubDate, reviewText, divider
+  reviewTitle, divider
 } from './styles.css';
 import StarIcons from 'Elements/Icons/Star';
 

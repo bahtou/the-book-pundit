@@ -77,14 +77,27 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
+        include: /node_modules/,
+        loaders: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.css$/,
         include: cssPaths,
         use: [
-          ExtractCssChunks.loader,
+          {
+            loader: ExtractCssChunks.loader,
+            options: {
+              hot: true, // if you want HMR - we try to automatically inject hot reloading but if it's not working, add it to the config
+              modules: true, // if you use cssModules, this can help.
+              reloadAll: true, // when desperation kicks in - this is a brute force HMR flag
+
+            }
+          },
           {
             loader: 'css-loader',
             options: {
               import: false,
-              url: false,
+              url: true,
               modules: true,
               // localIdentName: '[folder]__[local]--[hash:base64:4]',
               localIdentName: '[folder]__[local]',
@@ -109,19 +122,6 @@ module.exports = {
                   features: {
                     'nesting-rules': true
                   }
-                //   // features: {
-                //   //   'alpha-hex-colors': true,
-                //   //   'custom-environment-variables': true,
-                //   //   'custom-media-queries': true,
-                //   //   'custom-properties': true,
-                //   //   'custom-selectors': true,
-                //   //   'font-variant-property ': true,
-                //   //   'gap-properties ': true,
-                //   //   'nesting-rules': true,
-                //   //   'media-query-ranges': true,
-                //   //   ':focus-visible-pseudo-class': true,
-                //   //   ':focus-within-pseudo-class': true,
-                //   // }
                 }),
                 require('precss') // SASS-like markup,
               ]
