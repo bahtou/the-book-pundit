@@ -9,7 +9,7 @@ import {
   bookTitle, bookAuthor, ratingScore, bookInfo, reviewsNum, pubYear, ratingInfo, ratingStars
 } from './styles.css';
 import StarIcons from 'Elements/Icons/Star';
-const BookReviews = React.lazy(() => import('Components/BookReviews'));
+const BookReviews = React.lazy(() => import('Components/BookList/BookReviews'));
 
 
 const BookCard = ({ book, fetchBookReviewsRequested, reviews:{ currentReviews, reviewResults }}) => {
@@ -86,6 +86,5 @@ function mapStateToProps(state) {
   const { reviews } = state;
   return { reviews };
 }
-
 
 export default connect(mapStateToProps, { fetchBookReviewsRequested })(BookCard);

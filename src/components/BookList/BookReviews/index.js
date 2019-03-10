@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { noBookReviewsForYou } from './styles.css';
-import BookReview from 'Components/BookReview';
+import BookReview from 'Components/BookList/BookReview';
 
 
 function BookReviews({ bookReviews }) {

@@ -54,13 +54,6 @@ const baseConfig = {
         }]
       },
       {
-        test: /\.js$/,
-        include: path.resolve(__dirname, '..', `src/utils/workers`),
-        use: [{
-          loader: 'worker-loader'
-        }]
-      },
-      {
         test: /\.(eot|ttf|otf|woff|woff2)$/,
         include: fontPathEntry,
         use: [{
@@ -87,10 +80,6 @@ const baseConfig = {
     ]
   },
 
-  optimization: {
-    noEmitOnErrors: true
-  },
-
   plugins: [
     new ErrorOverlayPlugin(),
 
@@ -115,6 +104,12 @@ const baseConfig = {
       maxChunks: 1
     })
   ],
+
+  optimization: {
+    noEmitOnErrors: true,
+    namedModules: true,
+    namedChunks: true
+  },
 
   resolve: {
     alias: resolveAliasPaths,

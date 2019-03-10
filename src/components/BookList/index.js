@@ -1,5 +1,5 @@
 import React from 'react';
-import BookCard from 'Components/BookCard';
+import BookCard from 'Components/BookList/BookCard';
 
 import { listContainer, noBookForYou } from './styles.css';
 

@@ -132,11 +132,6 @@ module.exports = {
     ]
   },
 
-  optimization: {
-    namedModules: true,
-    namedChunks: true
-  },
-
   plugins: [
     // see webpack.EnvironmentPlugin(["NODE_ENV"])
     new webpack.DefinePlugin({

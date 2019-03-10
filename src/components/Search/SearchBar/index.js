@@ -49,6 +49,14 @@ function SearchBar({
     setBtnDisplay({ 'display': 'flex' });
   }
 
+  function handleOnKeyPress(e) {
+    const searchTerm = inputEl.current.value;
+
+    if (e.key !== 'Enter' || !searchTerm) return;
+
+    _fetchBookList(searchTerm);
+  }
+
   function removeSearchTerm() {
     dispatch({ type: 'setSearchTerm', data: '' });
     inputEl.current.focus();
@@ -57,14 +65,6 @@ function SearchBar({
     if (hasSearchHistory) {
       dispatch({ type: 'setIsPanelOpen', data: true });
     }
-  }
-
-  function handleOnKeyPress(e) {
-    const searchTerm = inputEl.current.value;
-
-    if (e.key !== 'Enter' || !searchTerm) return;
-
-    _fetchBookList(searchTerm);
   }
 
   function _fetchBookList(searchTerm) {

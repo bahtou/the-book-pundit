@@ -76,50 +76,6 @@ module.exports = {
     ]
   },
 
-  optimization: {
-    concatenateModules: true,
-    namedModules: true,
-    namedChunks: true,
-
-    minimizer: [
-      new TerserPlugin({
-        test: /\.js(\?.*)?$/i,
-        cache: true,
-        parallel: true,
-        sourceMap: true,
-        terserOptions: {
-          ie8: false,
-          keep_classnames: false,
-          keep_fnames: false,
-          safari10: false,
-        },
-        extractComments: true
-      })
-    ],
-
-    runtimeChunk: 'single',
-    splitChunks: {
-      chunks: 'all',
-      maxInitialRequests: Infinity,
-      minChunks: 1,
-      maxSize: 0,
-      name: true,
-      cacheGroups: {
-        commons: {
-          name: 'commons',
-          chunks: 'initial',
-          minChunks: 2
-        }
-      }
-    }
-  },
-
-  performance: {
-    hints: 'warning',         // "error" or false are valid too
-    maxEntrypointSize: 50000, // in bytes, default 250k
-    maxAssetSize: 450000,     // in bytes
-  },
-
   plugins: [
     new CleanWebpackPlugin('build', {
       root: path.resolve(__dirname, '..'),
@@ -162,5 +118,49 @@ module.exports = {
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1
     })
-  ]
+  ],
+
+  optimization: {
+    concatenateModules: true,
+    namedModules: true,
+    namedChunks: true,
+
+    minimizer: [
+      new TerserPlugin({
+        test: /\.js(\?.*)?$/i,
+        cache: true,
+        parallel: true,
+        sourceMap: true,
+        terserOptions: {
+          ie8: false,
+          keep_classnames: false,
+          keep_fnames: false,
+          safari10: false,
+        },
+        extractComments: true
+      })
+    ],
+
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+      maxInitialRequests: Infinity,
+      minChunks: 1,
+      maxSize: 0,
+      name: true,
+      cacheGroups: {
+        commons: {
+          name: 'commons',
+          chunks: 'initial',
+          minChunks: 2
+        }
+      }
+    }
+  },
+
+  performance: {
+    hints: 'warning',         // "error" or false are valid too
+    maxEntrypointSize: 50000, // in bytes, default 250k
+    maxAssetSize: 450000,     // in bytes
+  }
 };
