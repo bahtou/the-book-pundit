@@ -15,7 +15,7 @@ const { cssPaths, host, port, postcssPaths } = require('./base-params');
 module.exports = {
   entry: {
     main: path.resolve(__dirname, '..', 'src/index.js'),
-    BookReviews: path.resolve(__dirname, '..', 'src/components/BookReviews'),
+    BookReviews: path.resolve(__dirname, '..', 'src/components/BookList/BookReviews'),
     BookList: path.resolve(__dirname, '..', 'src/components/BookList'),
     vendor: [
       '@babel/polyfill', '@hot-loader/react-dom', 'react-hot-loader',
